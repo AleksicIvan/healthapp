@@ -1,7 +1,69 @@
 delete from  users;
+delete from specializations;
 
 INSERT INTO users (id, username, email, password, roles) VALUES
 (1, 'admin', 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'ADMIN');
 
 INSERT INTO users (id, username, email, password, roles) VALUES
 (2, 'user', 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'USER');
+
+
+-- PRAVILNIK
+-- O SPECIJALIZACIJAMA I UŽIM SPECIJALIZACIJAMA ZDRAVSTVENIH RADNIKA I ZDRAVSTVENIH SARADNIKA
+-- ("Sl. glasnik RS", br. 10/2013, 91/2013, 113/2013, 109/2014 i 53/2018)
+INSERT INTO specializations (id, name) VALUES
+(1, 'Interna medicina'),
+(2, 'Internistička onkologija'),
+(3, 'Infektologija'),
+(4, 'Pedijatrija'),
+(5, 'Neurologija'),
+(6, 'Psihijatrija'),
+(7, 'Dečja neurologija'),
+(8, 'Dečja i adolescentna psihijatrija'),
+(9, 'Ginekologija i akušerstvo'),
+(10, 'Opšta hirurgija'),
+(11, 'Abdominalna hirurgija'),
+(12, 'Vaskularna hirurgija'),
+(13, 'Grudna hirurgija'),
+(14, 'Ortopedska hirurgija i traumatologija'),
+(15, 'Dečja hirurgija'),
+(16, 'Neurohirurgija'),
+(17, 'Plastična, rekonstruktivna i estetska hirurgija'),
+(18, 'Maksilofacijalna hirurgija'),
+(19, 'Urologija'),
+(20, 'Kardiohirurgija'),
+(21, 'Urgentna medicina'),
+(22, 'Anesteziologija, reanimatologija i intenzivna terapija'),
+(23, 'Otorinolaringologija'),
+(24, 'Oftalmologija'),
+(25, 'Dermatovenerologija'),
+(26, 'Fizikalna medicina i rehabilitacija'),
+(27, 'Opšta medicina'),
+(28, 'Medicina rada'),
+(29, 'Radiologija'),
+(30, 'Radijaciona onkologija'),
+(31, 'Nuklearna medicina'),
+(32, 'Patologija'),
+(33, 'Sudska medicina'),
+(34, 'Medicinska mikrobiologija'),
+(35, 'Klinička biohemija'),
+(36, 'Klinička farmakologija'),
+(37, 'Laboratorijska medicina'),
+(38, 'Imunologija'),
+(39, 'Higijena'),
+(40, 'Epidemiologija'),
+(41, 'Socijalna medicina'),
+(42, 'Sportska medicina'),
+(43, 'Transfuzijska medicina'),
+(44, 'Vazduhoplovna medicina'),
+(45, 'Medicinska statistika i informatika'),
+(46, 'Palijativna medicina'),
+(47, 'Preventivna i dečja stomatologija'),
+(48, 'Bolesti zuba i endodoncija'),
+(49, 'Stomatološka protetika'),
+(50, 'Parodontologija i oralna medicina'),
+(51, 'Ortopedija vilica'),
+(52, 'Oralna hirurgija'),
+(53, 'Maksilofacijalna hirurgija'),
+(54, 'Medicinska statistika i informatika');
+
