@@ -14,7 +14,7 @@ public class SpecializationController {
     @Autowired
     private SpecializationsService specializationsService;
 
-    @GetMapping("/specijalizacije")
+    @GetMapping("/specializations")
     public @ResponseBody
     Iterable<Specialization> getAllSpecializations () {
         return specializationsService.getAllSpecializations();
@@ -34,12 +34,12 @@ public class SpecializationController {
         return specializationsService.addSpecialization(spec);
     }
 
-    @PutMapping("/specijalizacije/{id}")
+    @PutMapping("/specializations/{id}")
     public Specialization updateSpecialization (@RequestBody Specialization newSpec, @PathVariable Integer id) {
         return specializationsService.updateSpecialization(newSpec, id);
     }
 
-    @DeleteMapping("/specijalizacije/{id}")
+    @DeleteMapping("/specializations/{id}")
     void deleteSpecialization(@PathVariable Integer id) {
         specializationsService.deleteSpecialization(id);
     }
