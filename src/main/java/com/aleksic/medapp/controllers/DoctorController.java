@@ -1,7 +1,7 @@
 package com.aleksic.medapp.controllers;
 
 import com.aleksic.medapp.models.Doctor;
-import com.aleksic.medapp.repositories.DoctorRepository;
+import com.aleksic.medapp.services.DoctorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,38 +10,26 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class DoctorController {
     @Autowired
-    private DoctorRepository doctorRepository;
+    private DoctorsService doctorsService;
 
-    @GetMapping("/lekari")
+    @GetMapping("/doctors")
     public @ResponseBody
     Iterable<Doctor> getAllDoctors () {
-        return doctorRepository.findAll();
+        return doctorsService.getAllDoctors();
     }
 
-    @PostMapping(path="/lekari")
-    public @ResponseBody String addNewUser (@RequestBody Doctor doctor) {
-        doctorRepository.save(doctor);
-        return "Saved";
+    @PostMapping(path="/doctors")
+    public @ResponseBody Doctor addNewUser (@RequestBody Doctor doctor) {
+        return doctorsService.addDoctor(doctor);
     }
 
-    @PutMapping("/lekari/{id}")
+    @PutMapping("/doctors/{id}")
     public Doctor updateDoctor (@RequestBody Doctor newDoctor, @PathVariable Integer id) {
-        return doctorRepository
-                .findById(id)
-                .map(doctor -> {
-                    doctor.setFirstName(newDoctor.getFirstName());
-                    doctor.setLastName(newDoctor.getLastName());
-                    doctor.setSpecialization(newDoctor.getSpecialization());
-                    return doctorRepository.save(doctor);
-                })
-                .orElseGet(() -> {
-                    newDoctor.setId(id);
-                    return doctorRepository.save(newDoctor);
-                });
+        return doctorsService.updateDoctor(newDoctor, id);
     }
 
-    @DeleteMapping("/lekari/{id}")
+    @DeleteMapping("/doctors/{id}")
     void deleteDoctor(@PathVariable Integer id) {
-        doctorRepository.deleteById(id);
+        doctorsService.deleteDoctor(id);
     }
 }
