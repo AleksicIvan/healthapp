@@ -15,6 +15,10 @@ public class DoctorsService {
         return doctorRepository.findAll();
     }
 
+    public List<Doctor> getDoctorsWithQParam (String q) {
+        return doctorRepository.findDoctorsByFirstName(q);
+    }
+
     public Doctor addDoctor (Doctor doc) {
         return doctorRepository.save(doc);
     }

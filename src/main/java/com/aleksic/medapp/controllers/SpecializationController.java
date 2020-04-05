@@ -15,13 +15,12 @@ public class SpecializationController {
     private SpecializationsService specializationsService;
 
     @GetMapping("/specializations")
-    public @ResponseBody
-    Iterable<Specialization> getAllSpecializations () {
+    public Iterable<Specialization> getAllSpecializations () {
         return specializationsService.getAllSpecializations();
     }
 
     @GetMapping("/specializations/{id}")
-    public @ResponseBody Specialization getSpecialization (@PathVariable Integer id) throws ResponseStatusException {
+    public Specialization getSpecialization (@PathVariable Integer id) throws ResponseStatusException {
         try {
             return specializationsService.getSpecialization(id);
         } catch (Exception e) {
@@ -30,7 +29,7 @@ public class SpecializationController {
     }
 
     @PostMapping(path="/specializations")
-    public @ResponseBody Specialization addNewSpecialization (@RequestBody Specialization spec) {
+    public Specialization addNewSpecialization (@RequestBody Specialization spec) {
         return specializationsService.addSpecialization(spec);
     }
 

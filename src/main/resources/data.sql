@@ -1,5 +1,19 @@
-delete from  users;
+delete from users;
 delete from specializations;
+delete from doctors;
+delete from address;
+delete from health_check;
+delete from hospital;
+
+INSERT INTO address (id, city, street) VALUES
+(1000000, 'Westworld', 'Delos Inc. 1');
+
+INSERT INTO address (id, city, street) VALUES
+(1000001, 'Beograd', 'Resavska 51');
+
+INSERT INTO hospital (id, name, address_id) VALUES
+(1000000, 'Klinika za urologiju', 1000001);
+
 
 INSERT INTO users (id, username, email, password, roles) VALUES
 (1, 'admin', 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'ADMIN');
@@ -7,11 +21,15 @@ INSERT INTO users (id, username, email, password, roles) VALUES
 INSERT INTO users (id, username, email, password, roles) VALUES
 (2, 'user', 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'USER');
 
+INSERT INTO users (id, username, email, password, address_id, roles) VALUES
+(3, 'dolores', 'dolores@westworld.com', '$2y$12$ZS1yLbXgqvzEuF5GdY7eIeNDXFxjJ72AIoCmbee2iYJd3M7nh8FDG', 1000000,  'USER');
+
 
 -- PRAVILNIK
 -- O SPECIJALIZACIJAMA I UŽIM SPECIJALIZACIJAMA ZDRAVSTVENIH RADNIKA I ZDRAVSTVENIH SARADNIKA
 -- ("Sl. glasnik RS", br. 10/2013, 91/2013, 113/2013, 109/2014 i 53/2018)
 INSERT INTO specializations (id, name) VALUES
+(0, 'Doktor medicine - bez specijalizacije'),
 (1, 'Interna medicina'),
 (2, 'Internistička onkologija'),
 (3, 'Infektologija'),
@@ -66,4 +84,10 @@ INSERT INTO specializations (id, name) VALUES
 (52, 'Oralna hirurgija'),
 (53, 'Maksilofacijalna hirurgija'),
 (54, 'Medicinska statistika i informatika');
+
+INSERT INTO doctors (id, first_name, last_name, specialization_id) VALUES
+(1000000, 'Nebojša', 'Bojanić', 19);
+
+INSERT INTO doctors (id, first_name, last_name, specialization_id) VALUES
+(1000001, 'Zoran', 'Mladenović', 1);
 

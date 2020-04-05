@@ -50,7 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // configure access rules
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/api/doctors") .hasRole("USER")
+                .antMatchers("/api/healthchecks") .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/doctors") .hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/hospitals") .hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/hospitals") .hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/hospitals/{id}") .hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/api/specializations") .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST,"/api/specializations") .hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/api/specializations") .hasRole("ADMIN")

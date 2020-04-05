@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "doctors")
@@ -16,10 +17,12 @@ public class Doctor {
 
     @Getter
     @Setter
+    @NotBlank
     private String firstName;
 
     @Getter
     @Setter
+    @NotBlank
     private String lastName;
 
     @ManyToOne
