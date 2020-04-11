@@ -15,8 +15,16 @@ public class DoctorsService {
         return doctorRepository.findAll();
     }
 
-    public List<Doctor> getDoctorsWithQParam (String q) {
-        return doctorRepository.findDoctorsByFirstName(q);
+    public List<Doctor> getDoctorsByFirstName (String firstName) {
+        return doctorRepository.findDoctorsByFirstNameContainingIgnoreCase (firstName);
+    }
+
+    public List<Doctor> getDoctorsByLastName (String lastName) {
+        return doctorRepository.findDoctorsByLastNameContainingIgnoreCase (lastName);
+    }
+
+    public List<Doctor> getDoctorsBySpecialization (String specialization) {
+        return doctorRepository.findDoctorsBySpecializationNameContainingIgnoreCase (specialization);
     }
 
     public Doctor addDoctor (Doctor doc) {

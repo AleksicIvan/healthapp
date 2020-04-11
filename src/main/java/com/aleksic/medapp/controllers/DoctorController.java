@@ -23,15 +23,24 @@ public class DoctorController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    @GetMapping("/doctors")
-    public Iterable<Doctor> getAllDoctors () {
+    @GetMapping("/doctors/search")
+    public List<Doctor> getAllDoctors () {
         return doctorsService.getAllDoctors();
     }
 
-    @GetMapping("/doctors/search")
-    public List<Doctor> getDoctorsBySearch (@RequestParam(required = false) String q) {
-        System.out.println("q: " + q);
-        return doctorsService.getDoctorsWithQParam(q);
+    @GetMapping(value = "/doctors/search", params = "firstName")
+    public List<Doctor> getDoctorsByFirstName (@RequestParam(required = false) String firstName) {
+        return doctorsService.getDoctorsByFirstName(firstName);
+    }
+
+    @GetMapping(value = "/doctors/search", params = "lastName")
+    public List<Doctor> getDoctorsByLastName (@RequestParam(required = false) String lastName) {
+        return doctorsService.getDoctorsByLastName(lastName);
+    }
+
+    @GetMapping(value = "/doctors/search", params = "specialization")
+    public List<Doctor> getDoctorsBySpecialization (@RequestParam(required = false) String specialization) {
+        return doctorsService.getDoctorsBySpecialization(specialization);
     }
 
     @PostMapping(path="/doctors")

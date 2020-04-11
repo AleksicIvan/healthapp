@@ -1,26 +1,26 @@
 package com.aleksic.medapp.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+@Data
 @Entity
 public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private int Id;
 
-    @Getter
-    @Setter
+    @NotNull
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Getter
-    @Setter
+    @Nullable
     private Address address;
 }
 

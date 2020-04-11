@@ -17,12 +17,23 @@ public class HospitalsService {
         return hospitalRepository.findAll();
     }
 
+    public List<Hospital> getHospitalByAddressCity (String city) {
+        return hospitalRepository.findHospitalByAddressCityContainingIgnoreCase(city);
+    }
+
+    public List<Hospital> getHospitalByName (String name) {
+        return hospitalRepository.findHospitalByNameContainingIgnoreCase(name);
+    }
+
+    public List<Hospital> getHospitalByAddressStreet (String street) {
+        return hospitalRepository.findHospitalByAddressStreetContainingIgnoreCase(street);
+    }
+
     public Hospital editHospital (Hospital hospital) {
-        Hospital foundHospital = hospitalRepository.findById(hospital.getId()).get();
         try {
-            return hospitalRepository.save(hospital);
+             return hospitalRepository.save(hospital);
         } catch (Exception e) {
-            throw new GeneralException("Something went wrong while saving new health check.");
+            throw new GeneralException("Something went wrong while editing health check.");
         }
     }
 
@@ -33,5 +44,17 @@ public class HospitalsService {
             throw new GeneralException("Something went wrong while saving new health check.");
         }
     }
+
+    public boolean findHospitalById (int id) {
+        try {
+            Hospital foundHospital = hospitalRepository.findById(id).get();
+            if (foundHospital != null) return true;
+            else return false;
+        } catch (Exception e) {
+            throw new GeneralException("Something went wrong while saving new health check.");
+        }
+    }
+
+
 }
 
