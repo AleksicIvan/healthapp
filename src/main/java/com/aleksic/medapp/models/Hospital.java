@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@Table(name = "hospitals")
 public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

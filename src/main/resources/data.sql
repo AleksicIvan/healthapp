@@ -1,17 +1,10 @@
-delete from users;
-delete from specializations;
-delete from doctors;
-delete from address;
-delete from health_check;
-delete from hospital;
-
-INSERT INTO address (id, city, street) VALUES
+INSERT INTO addresses (id, city, street) VALUES
 (1000000, 'Westworld', 'Delos Inc. 1');
 
-INSERT INTO address (id, city, street) VALUES
+INSERT INTO addresses (id, city, street) VALUES
 (1000001, 'Beograd', 'Resavska 51');
 
-INSERT INTO hospital (id, name, address_id) VALUES
+INSERT INTO hospitals (id, name, address_id) VALUES
 (1000000, 'Klinika za urologiju', 1000001);
 
 
@@ -88,6 +81,16 @@ INSERT INTO specializations (id, name) VALUES
 INSERT INTO doctors (id, first_name, last_name, specialization_id) VALUES
 (1000000, 'Nebojša', 'Bojanić', 19);
 
-INSERT INTO doctors (id, first_name, last_name, specialization_id) VALUES
-(1000001, 'Zoran', 'Mladenović', 1);
+INSERT INTO health_checks (id, description, hospital_id, created_at, user_id, doctor_id) VALUES
+(1, "", 1000000, "2020-04-04T08:23:21.440423", 3, 1000000);
+
+INSERT INTO reports (id, s3file_url, health_check_id) VALUES
+(1, "https://medapp-healthcheck-12042020.s3.eu-central-1.amazonaws.com/3/1/pregled1.png", 1);
+
+INSERT INTO reports (id, s3file_url, health_check_id) VALUES
+(2, "https://medapp-healthcheck-12042020.s3.eu-central-1.amazonaws.com/3/1/pregled2.png", 1);
+
+
+
+
 
