@@ -44,6 +44,7 @@ public class HospitalController {
     public ResponseEntity<?> addHospital (@RequestBody Hospital hospital, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap!=null) return errorMap;
+
         Hospital newHospital = hospitalsService.addHospital(hospital);
         return new ResponseEntity(newHospital, HttpStatus.OK);
     }

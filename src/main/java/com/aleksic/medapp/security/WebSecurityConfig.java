@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // configure access rules
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/me") .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/healthchecks") .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/doctors") .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET,"/api/hospitals") .hasAnyRole("USER", "ADMIN")
@@ -64,9 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/api/users") .permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated();
-        //                .formLogin()
-//                .and()
-//                .rememberMe().tokenValiditySeconds(2592000);
     }
 
 }
