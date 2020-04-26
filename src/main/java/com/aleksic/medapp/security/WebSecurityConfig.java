@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import java.util.Collections;
 
 
 @Configuration
@@ -37,9 +39,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                // enable cors and expose Authorization header
+                .cors().configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedHeaders(Collections.singletonList("*"));
+                    config.setAllowedMethods(Collections.singletonList("*"));
+                    config.addAllowedOrigin("*");
+                    config.setAllowCredentials(true);
+                    config.addExposedHeader("Authorization");
+                    return config;
+                })
+                .and()
                 // remove csrf and state in session because in jwt we do not need them
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
