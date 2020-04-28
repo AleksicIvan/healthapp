@@ -82,7 +82,7 @@ INSERT INTO doctors (id, first_name, last_name, specialization_id) VALUES
 (1000000, 'Nebojša', 'Bojanić', 19);
 
 INSERT INTO health_checks (id, description, hospital_id, created_at, user_id, doctor_id) VALUES
-(1, "", 1000000, "2020-04-04T08:23:21.440423", 3, 1000000);
+(1, "Pij vise vode", 1000000, "2020-04-04T08:23:21.440423", 3, 1000000);
 
 INSERT INTO reports (id, s3file_url, health_check_id) VALUES
 (1, "https://medapp-healthcheck-12042020.s3.eu-central-1.amazonaws.com/3/1/pregled1.png", 1);
