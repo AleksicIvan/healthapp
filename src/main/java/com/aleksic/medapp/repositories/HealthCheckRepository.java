@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface HealthCheckRepository extends JpaRepository<HealthCheck, Integer> {
     public List<HealthCheck> findHealthChecksByUserId(Integer id);
+    public HealthCheck findHealthCheckById(Integer healthCheckId);
     public List<HealthCheck> findAllByDoctorSpecializationName(String name);
 }

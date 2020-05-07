@@ -11,6 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -23,8 +26,18 @@ public class HealthCheckController {
     private MapValidationErrorService mapValidationErrorService;
 
     @GetMapping("/healthchecks")
-    public Iterable<HealthCheck> getAllHealthChecks () {
-        return healthCheckService.getAllHealthChecks();
+    public Iterable<Object> getAllHealthChecks () {
+        List<Object> healthChecksLite = new ArrayList<>();
+        List<HealthCheck> allHealthChecks = healthCheckService.getAllHealthChecks();
+        allHealthChecks.forEach(check -> {
+            healthChecksLite.add(healthCheckService.convertHealthcheckToMap(check));
+        });
+        return healthChecksLite;
+    }
+
+    @GetMapping("/user/healthchecks/{healthCheckId}")
+    public HealthCheck getHealthCheck (@PathVariable Integer healthCheckId) {
+        return healthCheckService.getCheck(healthCheckId);
     }
 
     @GetMapping("/healthchecks/{specialization}")

@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,8 +42,13 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/healthchecks")
-    public List<HealthCheck> getUsersHealthChecks (@PathVariable Integer id) {
-        return healthCheckService.getHealthChecksByUserId(id);
+    public List<Object> getUsersHealthChecks (@PathVariable Integer id) {
+        List<Object> healthChecksLite = new ArrayList<>();
+        List<HealthCheck> allHealthChecks = healthCheckService.getAllHealthChecks();
+        allHealthChecks.forEach(check -> {
+            healthChecksLite.add(healthCheckService.convertHealthcheckToMap(check));
+        });
+        return healthChecksLite;
     }
 
     @GetMapping("/users/{id}")

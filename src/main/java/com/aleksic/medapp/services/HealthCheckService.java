@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HealthCheckService {
@@ -19,10 +21,13 @@ public class HealthCheckService {
         return healthCheckRepository.findAll();
     }
 
-    public List<HealthCheck> getUsersHealthChecks (Integer id) {
-        return new ArrayList<>();
+    public HealthCheck getCheck (Integer healthCheckId) {
+        try {
+            return healthCheckRepository.findHealthCheckById(healthCheckId);
+        } catch (Exception e) {
+            throw new GeneralException("Something went wrong while getting health check.");
+        }
     }
-
     public HealthCheck addHealthCheck (HealthCheck check) {
         try {
             return healthCheckRepository.save(check);
@@ -43,5 +48,15 @@ public class HealthCheckService {
         healthCheckRepository.findAllByDoctorSpecializationName(name)
                 .forEach(healthChecks::add);
         return healthChecks;
+    }
+
+    public Map<String, Object> convertHealthcheckToMap (HealthCheck check) {
+        HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("id", check.getId());
+        stringObjectHashMap.put("createdAt", check.getCreatedAt());
+        stringObjectHashMap.put("hospital", check.getHospital());
+        stringObjectHashMap.put("doctor", check.getDoctor());
+        stringObjectHashMap.put("description", check.getDescription());
+        return stringObjectHashMap;
     }
 }
