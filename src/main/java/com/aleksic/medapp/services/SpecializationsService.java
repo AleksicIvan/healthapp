@@ -20,6 +20,10 @@ public class SpecializationsService {
     @Autowired
     private PaginationService paginationService;
 
+    public List<Specialization> getAllSpecializations () {
+        return specializationRepository.findAll();
+    }
+
     public Map<String, Object> getAllSpecializations (Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
         Page<Specialization> pagedResult = specializationRepository.findAll(paging);
@@ -27,8 +31,11 @@ public class SpecializationsService {
         return paginationService.getPagedEntites(pagedResult);
     }
 
-    public List<Specialization> getSpecializationByName (String name) {
-        return specializationRepository.findSpecializationByNameContainingIgnoreCase(name);
+    public  Map<String, Object> getSpecializationByName (String name, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+        Page<Specialization> pagedResult = specializationRepository.findSpecializationByNameContainingIgnoreCase(name, paging);
+
+        return paginationService.getPagedEntites(pagedResult);
     }
 
     public Specialization getSpecialization (Integer id) throws Exception {

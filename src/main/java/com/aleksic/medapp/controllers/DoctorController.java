@@ -54,6 +54,26 @@ public class DoctorController {
         return new ResponseEntity<Map<String, Object>>(allDocs, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/doctors/paged/search", params = "fullName")
+    public ResponseEntity<Map<String, Object>> getAllDoctorsByFullName (@RequestParam(required = false) String fullName,
+                                                                        @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                        @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                        @RequestParam(defaultValue = "rating") String sortBy) {
+
+        Map<String, Object> allDocs = doctorsService.getDoctorsByFullName(fullName, pageNo, pageSize, sortBy);
+        return new ResponseEntity<Map<String, Object>>(allDocs, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/doctors/paged/search", params = "specialization")
+    public ResponseEntity<Map<String, Object>> getAllDoctorsBySpecialization (@RequestParam(required = false) String specialization,
+                                                                              @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                              @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                              @RequestParam(defaultValue = "rating") String sortBy) {
+
+        Map<String, Object> allSpecs = doctorsService.getDoctorsBySpecialization(specialization, pageNo, pageSize, sortBy);
+        return new ResponseEntity<Map<String, Object>>(allSpecs, new HttpHeaders(), HttpStatus.OK);
+    }
+
     @PostMapping(path="/doctors")
     public ResponseEntity<?> addNewDoctor (@Valid @RequestBody Doctor doctor, BindingResult result) {
         Doctor newDoctor = doctorsService.addDoctor(doctor);

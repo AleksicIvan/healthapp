@@ -6,8 +6,11 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.SequenceGenerator;
+
 @Data
 @Service
+@SequenceGenerator(name = "seq", initialValue = 100, allocationSize = 1000000)
 public class ReportService {
     @Autowired
     private ReportRepository reportRepository;

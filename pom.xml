@@ -88,6 +88,12 @@
             <version>6.1.5.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>6.4.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -96,6 +102,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.flywaydb</groupId>-->
+<!--                <artifactId>flyway-maven-plugin</artifactId>-->
+<!--                <version>4.0.3</version>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

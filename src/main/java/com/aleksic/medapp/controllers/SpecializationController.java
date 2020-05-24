@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,12 +19,28 @@ public class SpecializationController {
     @Autowired
     private SpecializationsService specializationsService;
 
+    @GetMapping("/specializations/all")
+    public ResponseEntity<List> getAllSpecializationsWithoutPagination () {
+        List<Specialization> specs = specializationsService.getAllSpecializations();
+        return new ResponseEntity(specs, new HttpHeaders(), HttpStatus.OK);
+    }
+
     @GetMapping("/specializations")
     public ResponseEntity<Map<String, Object>> getAlSpecializations (@RequestParam(defaultValue = "0") Integer pageNo,
                                                                      @RequestParam(defaultValue = "10") Integer pageSize,
                                                                      @RequestParam(defaultValue = "id") String sortBy) {
 
         Map<String, Object> allSpecializations = specializationsService.getAllSpecializations(pageNo, pageSize, sortBy);
+        return new ResponseEntity<Map<String, Object>>(allSpecializations, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/specializations/search")
+    public ResponseEntity<Map<String, Object>> getAlSpecializations (@RequestParam String name,
+                                                                     @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                     @RequestParam(defaultValue = "id") String sortBy) {
+
+        Map<String, Object> allSpecializations = specializationsService.getSpecializationByName(name, pageNo, pageSize, sortBy);
         return new ResponseEntity<Map<String, Object>>(allSpecializations, new HttpHeaders(), HttpStatus.OK);
     }
 

@@ -24,8 +24,22 @@ public class DoctorsService {
     private PaginationService paginationService;
 
     public Map<String, Object> getAllDoctors (Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Doctor> pagedResult = doctorRepository.findAll(paging);
+
+        return paginationService.getPagedEntites(pagedResult);
+    }
+
+    public Map<String, Object> getDoctorsBySpecialization (String specialization, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Page<Doctor> pagedResult = doctorRepository.findDoctorsBySpecializationNameContainingIgnoreCase(specialization, paging);
+
+        return paginationService.getPagedEntites(pagedResult);
+    }
+
+    public Map<String, Object> getDoctorsByFullName (String fullName, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Page<Doctor> pagedResult = doctorRepository.findDoctorsByFullNameContainingIgnoreCase(fullName, paging);
 
         return paginationService.getPagedEntites(pagedResult);
     }
@@ -39,8 +53,8 @@ public class DoctorsService {
         return doctorRepository.findDoctorsByLastNameContainingIgnoreCase (lastName);
     }
 
-    public List<Doctor> getDoctorsByFullName (String lastName) {
-        return doctorRepository.findDoctorsByFullNameContainingIgnoreCase (lastName);
+    public List<Doctor> getDoctorsByFullName (String fullName) {
+        return doctorRepository.findDoctorsByFullNameContainingIgnoreCase (fullName);
     }
 
     public List<Doctor> getDoctorsBySpecialization (String specialization) {
@@ -72,12 +86,8 @@ public class DoctorsService {
         } else {
             safeNoOfRatings = doc.getNoOfRatings();
         }
-        System.out.println("safeAllRatings " + safeAllRatings);
-        System.out.println("safeNoOfRatings " + safeNoOfRatings);
 
         Integer newRating = computeRating(safeAllRatings, safeNoOfRatings);
-        System.out.println("newRating " + newRating);
-
         doc.setRating(newRating);
         return doctorRepository.save(doc);
     }

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
 
     @NotNull
     private String name;

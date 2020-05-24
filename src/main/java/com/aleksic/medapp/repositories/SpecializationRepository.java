@@ -10,7 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SpecializationRepository extends JpaRepository<Specialization, Integer> {
+    List<Specialization> findAll();
     Page<Specialization> findAll(Pageable pageable);
-    List<Specialization> findSpecializationByNameContainingIgnoreCase(String name);
+    Page<Specialization> findSpecializationByNameContainingIgnoreCase(String name, Pageable pageable);
 }
 
