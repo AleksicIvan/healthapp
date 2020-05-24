@@ -6,13 +6,18 @@ import com.aleksic.medapp.models.User;
 import com.aleksic.medapp.services.CustomerUserDetailsService;
 import com.aleksic.medapp.services.HealthCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -42,13 +47,18 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/healthchecks")
-    public List<Object> getUsersHealthChecks (@PathVariable Integer id) {
-        List<Object> healthChecksLite = new ArrayList<>();
-        List<HealthCheck> allHealthChecks = healthCheckService.getAllHealthChecks();
-        allHealthChecks.forEach(check -> {
-            healthChecksLite.add(healthCheckService.convertHealthcheckToMap(check));
-        });
-        return healthChecksLite;
+    public ResponseEntity<Map<String, Object>> getUsersHealthChecks (@PathVariable Integer id,
+                                                                   @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                   @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                   @RequestParam(defaultValue = "createdAt") String sortBy) {
+//        List<Object> healthChecksLite = new ArrayList<>();
+//        Map<String, Object> allHealthChecks = healthCheckService.getAllHealthChecks(pageNo, pageSize, sortBy);
+//        allHealthChecks.forEach(check -> {
+//            healthChecksLite.add(healthCheckService.convertHealthcheckToMap(check));
+//        });
+        Map<String, Object> userHealthChecks = healthCheckService.getHealthChecksByUserId(id, pageNo, pageSize, sortBy);
+        return new ResponseEntity(userHealthChecks, new HttpHeaders(), HttpStatus.OK);
+//        return healthChecksLite;
     }
 
     @GetMapping("/users/{id}")
@@ -57,9 +67,9 @@ public class UserController {
     }
 
     @PostMapping(path="/users")
-    public User addNewUser (@RequestBody User user) {
+    public ResponseEntity<User> addNewUser (@RequestBody User user) {
         User loggedInUser = customerUserDetailsService.saveUser(user);
-        return loggedInUser;
+        return new ResponseEntity(loggedInUser, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping("/users/{id}")

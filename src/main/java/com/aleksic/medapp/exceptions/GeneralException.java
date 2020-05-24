@@ -7,5 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GeneralException extends RuntimeException {
     public GeneralException(String message) {
         super(message);
+        System.out.println("GeneralException contstructor message: " + message);
     }
 }

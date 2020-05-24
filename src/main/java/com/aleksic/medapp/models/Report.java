@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "reports")
 public class Report {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
     private String s3FileUrl;
 

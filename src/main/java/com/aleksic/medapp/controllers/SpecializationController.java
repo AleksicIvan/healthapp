@@ -3,9 +3,13 @@ package com.aleksic.medapp.controllers;
 import com.aleksic.medapp.models.Specialization;
 import com.aleksic.medapp.services.SpecializationsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -15,8 +19,12 @@ public class SpecializationController {
     private SpecializationsService specializationsService;
 
     @GetMapping("/specializations")
-    public Iterable<Specialization> getAllSpecializations () {
-        return specializationsService.getAllSpecializations();
+    public ResponseEntity<Map<String, Object>> getAlSpecializations (@RequestParam(defaultValue = "0") Integer pageNo,
+                                                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                     @RequestParam(defaultValue = "id") String sortBy) {
+
+        Map<String, Object> allSpecializations = specializationsService.getAllSpecializations(pageNo, pageSize, sortBy);
+        return new ResponseEntity<Map<String, Object>>(allSpecializations, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/specializations/{id}")

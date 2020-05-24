@@ -3,8 +3,11 @@ package com.aleksic.medapp.models;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -20,6 +23,12 @@ public class Doctor {
 
     @NotBlank
     private String lastName;
+
+    private String fullName;
+
+    private Integer rating;
+    private Integer allRatings;
+    private Double noOfRatings;
 
     @ManyToOne
     private Specialization specialization;

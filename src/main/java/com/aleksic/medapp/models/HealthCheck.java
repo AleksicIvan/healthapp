@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -13,17 +14,19 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "health_checks")
+@SequenceGenerator(name = "seq", initialValue = 100, allocationSize = 1000000)
 public class HealthCheck {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
     @Nullable
     private String description;
 
     @OneToOne
+    @Valid
     private Hospital hospital;
 
-    @JsonFormat(pattern = "dd-mm-yyyy")
+    @NotNull
     private Date createdAt;
 
     @ManyToOne
@@ -32,6 +35,7 @@ public class HealthCheck {
 
     @ManyToOne
     @NotNull
+    @Valid
     private Doctor doctor;
 
     @OneToMany(mappedBy = "healthCheck")

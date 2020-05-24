@@ -1,5 +1,6 @@
 package com.aleksic.medapp.models;
 
+import lombok.Data;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "users")
 @SequenceGenerator(name = "seq", initialValue = 100, allocationSize = 1000000)
@@ -23,9 +25,31 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    private String roles = "";
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public Integer getId() {
         return id;
@@ -42,8 +66,6 @@ public class User implements UserDetails {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    private String roles = "";
 
     public String getRoles() {
         return roles;
