@@ -63,6 +63,20 @@ public class HealthCheckService {
         return getPagedChecks(pagedResult);
     }
 
+    public Map<String, Object> getAllHealthChecksBtyDoctorFullName (String fullName, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Page<HealthCheck> pagedResult = healthCheckRepository.findHealthCheckByDoctorFullNameContainingIgnoreCase(fullName, paging);
+
+        return getPagedChecks(pagedResult);
+    }
+
+    public Map<String, Object> getAllHealthChecksByDoctorSpecialization (String specialization, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Page<HealthCheck> pagedResult = healthCheckRepository.findHealthCheckByDoctorSpecializationNameContainingIgnoreCase(specialization, paging);
+
+        return getPagedChecks(pagedResult);
+    }
+
     public HealthCheck getCheck (Integer healthCheckId) {
         try {
             return healthCheckRepository.findHealthCheckById(healthCheckId);
@@ -83,6 +97,10 @@ public class HealthCheckService {
         healthCheckRepository.findAllByDoctorSpecializationName(name)
                 .forEach(healthChecks::add);
         return healthChecks;
+    }
+
+    public void deleteHealthcheck (Integer id) {
+        healthCheckRepository.deleteById(id);
     }
 
     public Map<String, Object> converPaginatedResultToMap (HealthCheck check) {

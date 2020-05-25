@@ -52,6 +52,24 @@ public class HealthCheckController {
         return healthCheckService.getHealthChecksBySpecializationName(specialization);
     }
 
+    @GetMapping(value = "/healthchecks/search", params = "fullName")
+    public ResponseEntity<Map<String, Object>> searchHealthchecksByDoctorFullName (@RequestParam String fullName,
+                                                                                    @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                                   @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                   @RequestParam(defaultValue = "createdAt") String sortBy) {
+        Map<String, Object> allHealthChecks = healthCheckService.getAllHealthChecksBtyDoctorFullName(fullName, pageNo, pageSize, sortBy);
+        return new ResponseEntity<Map<String, Object>>(allHealthChecks, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/healthchecks/search", params = "specialization")
+    public ResponseEntity<Map<String, Object>> searchHealthchecksByDoctorSpecialization (@RequestParam String specialization,
+                                                                                    @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                                   @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                   @RequestParam(defaultValue = "createdAt") String sortBy) {
+        Map<String, Object> allHealthChecks = healthCheckService.getAllHealthChecksByDoctorSpecialization(specialization    , pageNo, pageSize, sortBy);
+        return new ResponseEntity<Map<String, Object>>(allHealthChecks, new HttpHeaders(), HttpStatus.OK);
+    }
+
     @PostMapping("/healthchecks")
     public ResponseEntity<?> addHealthCheck (@Valid @RequestBody HealthCheck check, BindingResult result) {
         if (result.hasErrors()) {
@@ -75,5 +93,11 @@ public class HealthCheckController {
     public ResponseEntity<HealthCheck> updateHealthCheck(@RequestBody HealthCheck hc) {
         HealthCheck newHealthCheck = healthCheckService.addHealthCheck(hc);
         return new ResponseEntity(newHealthCheck, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/healthchecks/{id}")
+    public ResponseEntity<?> deleteHealthcheck(@PathVariable Integer id) {
+        healthCheckService.deleteHealthcheck(id);
+        return new ResponseEntity(new HttpHeaders(), HttpStatus.OK);
     }
 }

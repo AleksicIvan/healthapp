@@ -13,4 +13,6 @@ public interface HealthCheckRepository extends JpaRepository<HealthCheck, Intege
     public Page<HealthCheck> findHealthChecksByUserId(Integer id, Pageable pageable);
     public HealthCheck findHealthCheckById(Integer healthCheckId);
     public List<HealthCheck> findAllByDoctorSpecializationName(String name);
+    public Page<HealthCheck> findHealthCheckByDoctorFullNameContainingIgnoreCase(String fullName, Pageable pageable);
+    public Page<HealthCheck> findHealthCheckByDoctorSpecializationNameContainingIgnoreCase(String specialization, Pageable pageable);
 }

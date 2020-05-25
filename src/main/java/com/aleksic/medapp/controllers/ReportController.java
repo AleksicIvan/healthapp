@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api")
@@ -23,5 +24,11 @@ public class ReportController {
     public ResponseEntity<?> addNewReport (@Valid @RequestBody Report report, BindingResult result) {
         Report newReport = reportService.saveReport(report);
         return new ResponseEntity<Report>(newReport, new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/reports/{id}")
+    public ResponseEntity<?> deleteReport (@PathVariable Integer id) {
+        reportService.deleteReport(id);
+        return new ResponseEntity(new HttpHeaders(), HttpStatus.OK);
     }
 }

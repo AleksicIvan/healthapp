@@ -76,6 +76,7 @@ CREATE TABLE `health_checks` (
                                  `id` int NOT NULL,
                                  `created_at` datetime(6) NOT NULL,
                                  `description` varchar(255) DEFAULT NULL,
+                                 `doctor_rating` int DEFAULT NULL,
                                  `doctor_id` int NOT NULL,
                                  `hospital_id` int DEFAULT NULL,
                                  `user_id` int NOT NULL,

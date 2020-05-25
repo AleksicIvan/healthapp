@@ -22,6 +22,9 @@ public class HealthCheck {
     @Nullable
     private String description;
 
+    @Nullable
+    private Integer doctorRating;
+
     @OneToOne
     @Valid
     private Hospital hospital;
@@ -38,7 +41,7 @@ public class HealthCheck {
     @Valid
     private Doctor doctor;
 
-    @OneToMany(mappedBy = "healthCheck")
+    @OneToMany(mappedBy = "healthCheck", orphanRemoval = true)
     @JsonManagedReference
     @Nullable
     private List<Report> reports;

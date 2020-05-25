@@ -18,4 +18,6 @@ public class ReportService {
     public Report saveReport(Report report) {
         return (Report) reportRepository.save(report);
     }
+
+    public void deleteReport(Integer id) {reportRepository.deleteById(id);}
 }
