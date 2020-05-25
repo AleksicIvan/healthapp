@@ -1,7 +1,6 @@
 package com.aleksic.medapp.repositories;
 
 import com.aleksic.medapp.models.Doctor;
-import com.aleksic.medapp.models.HealthCheck;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

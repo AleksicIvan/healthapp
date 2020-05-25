@@ -1,13 +1,11 @@
 package com.aleksic.medapp.controllers;
 
-import com.aleksic.medapp.exceptions.ApiRequestException;
 import com.aleksic.medapp.models.Doctor;
 import com.aleksic.medapp.models.HealthCheck;
 import com.aleksic.medapp.services.DoctorsService;
 import com.aleksic.medapp.services.HealthCheckService;
 import com.aleksic.medapp.services.MapValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.health.Health;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.Doc;
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")

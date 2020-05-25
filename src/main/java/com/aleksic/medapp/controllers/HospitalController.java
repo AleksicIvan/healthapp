@@ -1,7 +1,6 @@
 package com.aleksic.medapp.controllers;
 
 import com.aleksic.medapp.models.Hospital;
-import com.aleksic.medapp.models.Specialization;
 import com.aleksic.medapp.services.HospitalsService;
 import com.aleksic.medapp.services.MapValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;

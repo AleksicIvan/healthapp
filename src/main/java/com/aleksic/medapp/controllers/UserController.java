@@ -1,6 +1,5 @@
 package com.aleksic.medapp.controllers;
 
-import com.aleksic.medapp.models.HealthCheck;
 import com.aleksic.medapp.repositories.UserRepository;
 import com.aleksic.medapp.models.User;
 import com.aleksic.medapp.services.CustomerUserDetailsService;
@@ -11,12 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,14 +45,8 @@ public class UserController {
                                                                    @RequestParam(defaultValue = "0") Integer pageNo,
                                                                    @RequestParam(defaultValue = "10") Integer pageSize,
                                                                    @RequestParam(defaultValue = "createdAt") String sortBy) {
-//        List<Object> healthChecksLite = new ArrayList<>();
-//        Map<String, Object> allHealthChecks = healthCheckService.getAllHealthChecks(pageNo, pageSize, sortBy);
-//        allHealthChecks.forEach(check -> {
-//            healthChecksLite.add(healthCheckService.convertHealthcheckToMap(check));
-//        });
         Map<String, Object> userHealthChecks = healthCheckService.getHealthChecksByUserId(id, pageNo, pageSize, sortBy);
         return new ResponseEntity(userHealthChecks, new HttpHeaders(), HttpStatus.OK);
-//        return healthChecksLite;
     }
 
     @GetMapping("/users/{id}")

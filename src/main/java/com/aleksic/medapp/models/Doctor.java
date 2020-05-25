@@ -1,13 +1,7 @@
 package com.aleksic.medapp.models;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Data
