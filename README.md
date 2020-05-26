@@ -7,7 +7,7 @@ Search and see all your health-checks. No more papers, folders or always missing
 
 Your health within your hands.
 
-This repository has a **backend code** for **Healthapp/Nazdravlje** done with [Spring Boot](https://spring.io/projects/spring-boot) and some of supported modules:
+This repository has a **backend code** for **Healthapp/Nazdravlje** done with Java [OpenJDK](https://openjdk.java.net/) v1.8.0 and [Spring Boot](https://spring.io/projects/spring-boot) plus following modules (among others):
 [Maven](https://mvnrepository.com/) for project and dependencies management,
 [MySQL](https://www.mysql.com/) database,
 [Spring Security](https://spring.io/projects/spring-security) for authorization, authentication and encryption features, 
