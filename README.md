@@ -9,6 +9,7 @@ Your health within your hands.
 
 This repository has a **backend code** for **Healthapp/Nazdravlje** done with [Spring Boot](https://spring.io/projects/spring-boot) and some of supported modules:
 [Maven](https://mvnrepository.com/) for project and dependencies management,
+[MySQL](https://www.mysql.com/) database,
 [Spring Security](https://spring.io/projects/spring-security) for authorization, authentication and encryption features, 
 [Hibernate](https://hibernate.org/) for data persistence and object relation mapping, 
 [AWS S3](https://aws.amazon.com/s3/) for health-check reports storage,
