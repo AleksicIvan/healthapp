@@ -17,5 +17,7 @@ This repository has a **backend code** for **Healthapp/Nazdravlje** done with Ja
 [Flyway](https://flywaydb.org/) for database migrations, 
 [Lombok](https://projectlombok.org/) for faster developer experience and many more.
 
+Demo recording and screen shots can be found [here](https://drive.google.com/open?id=1GLhNh8ygHPe4hrYcFolqpsvf50BuveWF).
+
 The project was developed as part of the assignment for the course 
 **Advanced Software Technologies** on Master's studies - Software Engineering and Computer Sciences at the **Faculty of Organization Sciences, University of Belgrade, Serbia**.
