@@ -1,7 +1,5 @@
 package com.aleksic.medapp.services;
 
-import com.aleksic.medapp.models.Doctor;
-import com.aleksic.medapp.models.HealthCheck;
 import com.aleksic.medapp.models.Specialization;
 import com.aleksic.medapp.repositories.SpecializationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class SpecializationsService {
@@ -20,25 +20,25 @@ public class SpecializationsService {
     @Autowired
     private PaginationService paginationService;
 
-    public List<Specialization> getAllSpecializations () {
+    public List<Specialization> getAllSpecializations() {
         return specializationRepository.findAll();
     }
 
-    public Map<String, Object> getAllSpecializations (Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getAllSpecializations(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
         Page<Specialization> pagedResult = specializationRepository.findAll(paging);
 
         return paginationService.getPagedEntites(pagedResult);
     }
 
-    public  Map<String, Object> getSpecializationByName (String name, Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getSpecializationByName(String name, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
         Page<Specialization> pagedResult = specializationRepository.findSpecializationByNameContainingIgnoreCase(name, paging);
 
         return paginationService.getPagedEntites(pagedResult);
     }
 
-    public Specialization getSpecialization (Integer id) throws Exception {
+    public Specialization getSpecialization(Integer id) throws Exception {
         Optional<Specialization> spec = specializationRepository.findById(id);
         if (spec.isPresent()) {
             return spec.get();
@@ -46,11 +46,11 @@ public class SpecializationsService {
         throw new Exception("Specialization not found");
     }
 
-    public Specialization addSpecialization (Specialization spec) {
+    public Specialization addSpecialization(Specialization spec) {
         return specializationRepository.save(spec);
     }
 
-    public Specialization updateSpecialization (Specialization spec, Integer id) {
+    public Specialization updateSpecialization(Specialization spec, Integer id) {
         return specializationRepository
                 .findById(id)
                 .map(specialization -> {
@@ -63,7 +63,7 @@ public class SpecializationsService {
                 });
     }
 
-    public void deleteSpecialization (Integer id) {
+    public void deleteSpecialization(Integer id) {
         specializationRepository.deleteById(id);
     }
 

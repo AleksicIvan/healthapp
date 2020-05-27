@@ -74,8 +74,8 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public List<String> getRoleList(){
-        if(this.roles.length() > 0){
+    public List<String> getRoleList() {
+        if (this.roles.length() > 0) {
             return Arrays.asList(this.roles.split(","));
         }
         return new ArrayList<>();
@@ -97,6 +97,10 @@ public class User implements UserDetails {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -115,10 +119,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {

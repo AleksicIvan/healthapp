@@ -49,6 +49,31 @@ public class UserController {
         return new ResponseEntity(userHealthChecks, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("/users/{userId}/healthchecks/search")
+    public ResponseEntity<Map<String, Object>> searchUsersHealthchecksByDoctorFullName (@PathVariable Integer userId,
+                                                                                        @RequestParam String fullName,
+                                                                                        @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                                        @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                        @RequestParam(defaultValue = "createdAt") String sortBy) {
+        System.out.println("searchUsersHealthchecksByDoctorFullName");
+        Map<String, Object> allHealthChecks = healthCheckService.getAllUsersHealthChecksByDoctorFullName(userId, fullName, pageNo, pageSize, sortBy);
+        System.out.println("fullName: " + fullName);
+        System.out.println("userId: " + userId);
+        return new ResponseEntity<Map<String, Object>>(allHealthChecks, new HttpHeaders(), HttpStatus.OK);
+    }
+    @GetMapping(value = "/users/{userId}/healthchecks/search", params = "specialization")
+    public ResponseEntity<Map<String, Object>> searchUsersHealthchecksByDoctorSpecialization (@PathVariable Integer userId,
+                                                                                        @RequestParam String specialization,
+                                                                                        @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                                        @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                                        @RequestParam(defaultValue = "createdAt") String sortBy) {
+        System.out.println("searchUsersHealthchecksByDoctorSpecialization");
+        Map<String, Object> allHealthChecks = healthCheckService.getAllUsersHealthChecksByDoctorSpecialization(userId, specialization, pageNo, pageSize, sortBy);
+        System.out.println("specialization: " + specialization);
+        System.out.println("userId: " + userId);
+        return new ResponseEntity<Map<String, Object>>(allHealthChecks, new HttpHeaders(), HttpStatus.OK);
+    }
+
     @GetMapping("/users/{id}")
     public User getUser (@PathVariable Integer id) {
         return userRepository.findById(id).get();

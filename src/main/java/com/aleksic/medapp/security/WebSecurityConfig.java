@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+
 import java.util.Collections;
 
 
@@ -45,14 +46,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 // enable cors and expose Authorization header
                 .cors().configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedHeaders(Collections.singletonList("*"));
-                    config.setAllowedMethods(Collections.singletonList("*"));
-                    config.addAllowedOrigin("*");
-                    config.setAllowCredentials(true);
-                    config.addExposedHeader("Authorization");
-                    return config;
-                })
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedHeaders(Collections.singletonList("*"));
+            config.setAllowedMethods(Collections.singletonList("*"));
+            config.addAllowedOrigin("*");
+            config.setAllowCredentials(true);
+            config.addExposedHeader("Authorization");
+            return config;
+        })
                 .and()
                 // remove csrf and state in session because in jwt we do not need them
                 .csrf().disable()
@@ -60,24 +61,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // add jwt filters (1. authentication, 2. authorization)
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(),  userRepository))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
                 .authorizeRequests()
                 // configure access rules
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/me") .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/healthchecks") .hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/users/**/healthchecks") .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/doctors") .hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/api/hospitals") .hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST,"/api/hospitals") .hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT,"/api/hospitals/{id}") .hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET,"/api/specializations") .hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST,"/api/specializations") .hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT,"/api/specializations") .hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE,"/api/specializations") .hasRole("ADMIN")
-                .antMatchers("/api/users/{id}") .hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/me").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/healthchecks").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/users/**/healthchecks").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/doctors").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/hospitals").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/hospitals").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/hospitals/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/specializations").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/specializations").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/specializations").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/specializations").hasRole("ADMIN")
+                .antMatchers("/api/users/{id}").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/s3upload/**") .hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/s3upload/**").hasRole("USER")
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated();
     }

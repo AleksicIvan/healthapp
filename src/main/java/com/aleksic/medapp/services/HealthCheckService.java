@@ -1,9 +1,7 @@
 package com.aleksic.medapp.services;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.aleksic.medapp.exceptions.GeneralException;
 import com.aleksic.medapp.models.HealthCheck;
-import com.aleksic.medapp.models.Report;
 import com.aleksic.medapp.repositories.HealthCheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +23,7 @@ public class HealthCheckService {
     private Map<String, Object> getPagedChecks(Page<HealthCheck> pagedResult) {
         HashMap<String, Object> defaultMeta = new HashMap<>();
 
-        if(pagedResult.hasContent()) {
+        if (pagedResult.hasContent()) {
             HashMap<String, Object> responseWithMeta = new HashMap<>();
             responseWithMeta.put("data", pagedResult.getContent());
             responseWithMeta.put("meta", convertHealthcheckToMap(pagedResult));
@@ -44,7 +42,7 @@ public class HealthCheckService {
         }
     }
 
-    public Map<String, Object> getHealthChecksByUserId (Integer id, Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getHealthChecksByUserId(Integer id, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<HealthCheck> pagedResult = healthCheckRepository.findHealthChecksByUserId(id, paging);
 
@@ -56,35 +54,54 @@ public class HealthCheckService {
 //        return usersChecks;
     }
 
-    public Map<String, Object> getAllHealthChecks (Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getAllHealthChecks(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<HealthCheck> pagedResult = healthCheckRepository.findAll(paging);
 
         return getPagedChecks(pagedResult);
     }
 
-    public Map<String, Object> getAllHealthChecksBtyDoctorFullName (String fullName, Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getAllHealthChecksBtyDoctorFullName(String fullName, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<HealthCheck> pagedResult = healthCheckRepository.findHealthCheckByDoctorFullNameContainingIgnoreCase(fullName, paging);
 
         return getPagedChecks(pagedResult);
     }
 
-    public Map<String, Object> getAllHealthChecksByDoctorSpecialization (String specialization, Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getAllUsersHealthChecksByDoctorFullName(Integer id, String fullName, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        System.out.println("fullName: " + fullName);
+        System.out.println("id: " + id);
+        Page<HealthCheck> pagedResult = healthCheckRepository.findHealthCheckByUserIdAndDoctorFullNameContainingIgnoreCase(id, fullName, paging);
+
+        return getPagedChecks(pagedResult);
+    }
+
+    public Map<String, Object> getAllUsersHealthChecksByDoctorSpecialization(Integer id, String specialization, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        System.out.println("specialization: " + specialization);
+        System.out.println("id: " + id);
+        Page<HealthCheck> pagedResult = healthCheckRepository.findHealthCheckByUserIdAndDoctorSpecializationNameContainingIgnoreCase(id, specialization, paging);
+
+        return getPagedChecks(pagedResult);
+    }
+
+    public Map<String, Object> getAllHealthChecksByDoctorSpecialization(String specialization, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<HealthCheck> pagedResult = healthCheckRepository.findHealthCheckByDoctorSpecializationNameContainingIgnoreCase(specialization, paging);
 
         return getPagedChecks(pagedResult);
     }
 
-    public HealthCheck getCheck (Integer healthCheckId) {
+    public HealthCheck getCheck(Integer healthCheckId) {
         try {
             return healthCheckRepository.findHealthCheckById(healthCheckId);
         } catch (Exception e) {
             throw new GeneralException("Something went wrong while getting health check.");
         }
     }
-    public HealthCheck addHealthCheck (HealthCheck check) {
+
+    public HealthCheck addHealthCheck(HealthCheck check) {
         try {
             return healthCheckRepository.save(check);
         } catch (Exception e) {
@@ -92,18 +109,18 @@ public class HealthCheckService {
         }
     }
 
-    public List<HealthCheck> getHealthChecksBySpecializationName (String name) {
+    public List<HealthCheck> getHealthChecksBySpecializationName(String name) {
         List<HealthCheck> healthChecks = new ArrayList<HealthCheck>();
         healthCheckRepository.findAllByDoctorSpecializationName(name)
                 .forEach(healthChecks::add);
         return healthChecks;
     }
 
-    public void deleteHealthcheck (Integer id) {
+    public void deleteHealthcheck(Integer id) {
         healthCheckRepository.deleteById(id);
     }
 
-    public Map<String, Object> converPaginatedResultToMap (HealthCheck check) {
+    public Map<String, Object> converPaginatedResultToMap(HealthCheck check) {
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("id", check.getId());
         stringObjectHashMap.put("createdAt", check.getCreatedAt());
@@ -113,15 +130,15 @@ public class HealthCheckService {
         return stringObjectHashMap;
     }
 
-    public Map<String, Object> convertHealthcheckToMap (Page page) {
+    public Map<String, Object> convertHealthcheckToMap(Page page) {
         long count = page.getTotalElements();
         int pageForMeta = page.getNumber() + 1;
         double countDivided = (double) count / page.getSize();
-        int noPages = (int)Math.ceil(countDivided);
+        int noPages = (int) Math.ceil(countDivided);
 
         HashMap<String, Object> newResponseMeta = new HashMap<>();
         newResponseMeta.put("count", count);
-        newResponseMeta.put("page",pageForMeta);
+        newResponseMeta.put("page", pageForMeta);
         newResponseMeta.put("noPages", noPages);
 
         return newResponseMeta;

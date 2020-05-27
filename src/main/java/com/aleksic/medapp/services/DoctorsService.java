@@ -1,7 +1,6 @@
 package com.aleksic.medapp.services;
 
 import com.aleksic.medapp.models.Doctor;
-import com.aleksic.medapp.models.HealthCheck;
 import com.aleksic.medapp.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,21 +20,21 @@ public class DoctorsService {
     @Autowired
     private PaginationService paginationService;
 
-    public Map<String, Object> getAllDoctors (Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getAllDoctors(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Doctor> pagedResult = doctorRepository.findAll(paging);
 
         return paginationService.getPagedEntites(pagedResult);
     }
 
-    public Map<String, Object> getDoctorsBySpecialization (String specialization, Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getDoctorsBySpecialization(String specialization, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Doctor> pagedResult = doctorRepository.findDoctorsBySpecializationNameContainingIgnoreCase(specialization, paging);
 
         return paginationService.getPagedEntites(pagedResult);
     }
 
-    public Map<String, Object> getDoctorsByFullName (String fullName, Integer pageNo, Integer pageSize, String sortBy) {
+    public Map<String, Object> getDoctorsByFullName(String fullName, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Doctor> pagedResult = doctorRepository.findDoctorsByFullNameContainingIgnoreCase(fullName, paging);
 
@@ -45,33 +42,33 @@ public class DoctorsService {
     }
 
 
-    public List<Doctor> getDoctorsByFirstName (String firstName) {
-        return doctorRepository.findDoctorsByFirstNameContainingIgnoreCase (firstName);
+    public List<Doctor> getDoctorsByFirstName(String firstName) {
+        return doctorRepository.findDoctorsByFirstNameContainingIgnoreCase(firstName);
     }
 
-    public List<Doctor> getDoctorsByLastName (String lastName) {
-        return doctorRepository.findDoctorsByLastNameContainingIgnoreCase (lastName);
+    public List<Doctor> getDoctorsByLastName(String lastName) {
+        return doctorRepository.findDoctorsByLastNameContainingIgnoreCase(lastName);
     }
 
-    public List<Doctor> getDoctorsByFullName (String fullName) {
-        return doctorRepository.findDoctorsByFullNameContainingIgnoreCase (fullName);
+    public List<Doctor> getDoctorsByFullName(String fullName) {
+        return doctorRepository.findDoctorsByFullNameContainingIgnoreCase(fullName);
     }
 
-    public List<Doctor> getDoctorsBySpecialization (String specialization) {
-        return doctorRepository.findDoctorsBySpecializationNameContainingIgnoreCase (specialization);
+    public List<Doctor> getDoctorsBySpecialization(String specialization) {
+        return doctorRepository.findDoctorsBySpecializationNameContainingIgnoreCase(specialization);
     }
 
-    public Doctor addDoctor (Doctor doc) {
+    public Doctor addDoctor(Doctor doc) {
         doc.setFullName(doc.getFirstName() + " " + doc.getLastName());
         return doctorRepository.save(doc);
     }
 
-    private int computeRating (Integer givenRating, Double noOfRatings) {
+    private int computeRating(Integer givenRating, Double noOfRatings) {
         Integer calculatedNewRating = (int) Math.abs(givenRating / noOfRatings);
         return calculatedNewRating;
     }
 
-    public Doctor handleDoctorsRatings (Doctor doc) {
+    public Doctor handleDoctorsRatings(Doctor doc) {
         Integer safeAllRatings;
         Double safeNoOfRatings;
 
@@ -92,7 +89,7 @@ public class DoctorsService {
         return doctorRepository.save(doc);
     }
 
-    public Doctor updateDoctor (Doctor doc, Integer id) {
+    public Doctor updateDoctor(Doctor doc, Integer id) {
         return doctorRepository
                 .findById(id)
                 .map(doctor -> {
@@ -107,7 +104,7 @@ public class DoctorsService {
                 });
     }
 
-    public void deleteDoctor (Integer id) {
+    public void deleteDoctor(Integer id) {
         doctorRepository.deleteById(id);
     }
 

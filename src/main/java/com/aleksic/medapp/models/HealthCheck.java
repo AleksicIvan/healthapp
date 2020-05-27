@@ -24,7 +24,7 @@ public class HealthCheck {
     @Nullable
     private Integer doctorRating;
 
-    @OneToOne
+    @ManyToOne
     @Valid
     private Hospital hospital;
 

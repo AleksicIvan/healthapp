@@ -16,8 +16,10 @@ public class ReportService {
     private ReportRepository reportRepository;
 
     public Report saveReport(Report report) {
-        return (Report) reportRepository.save(report);
+        return reportRepository.save(report);
     }
 
-    public void deleteReport(Integer id) {reportRepository.deleteById(id);}
+    public void deleteReport(Integer id) {
+        reportRepository.deleteById(id);
+    }
 }

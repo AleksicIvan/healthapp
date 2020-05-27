@@ -20,7 +20,7 @@ public class FileStore {
         this.s3 = s3;
     }
 
-    public void save (
+    public void save(
             String path,
             String fileName,
             Optional<Map<String, String>> optionalMetadata,
@@ -28,7 +28,7 @@ public class FileStore {
         ObjectMetadata metadata = new ObjectMetadata();
 
         optionalMetadata.ifPresent(map -> {
-            if(!map.isEmpty()) {
+            if (!map.isEmpty()) {
                 map.forEach(metadata::addUserMetadata);
             }
         });

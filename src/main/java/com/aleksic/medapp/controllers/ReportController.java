@@ -18,14 +18,14 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @PostMapping(path="/reports")
-    public ResponseEntity<?> addNewReport (@Valid @RequestBody Report report, BindingResult result) {
+    @PostMapping(path = "/reports")
+    public ResponseEntity<?> addNewReport(@Valid @RequestBody Report report, BindingResult result) {
         Report newReport = reportService.saveReport(report);
         return new ResponseEntity<Report>(newReport, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/reports/{id}")
-    public ResponseEntity<?> deleteReport (@PathVariable Integer id) {
+    public ResponseEntity<?> deleteReport(@PathVariable Integer id) {
         reportService.deleteReport(id);
         return new ResponseEntity(new HttpHeaders(), HttpStatus.OK);
     }

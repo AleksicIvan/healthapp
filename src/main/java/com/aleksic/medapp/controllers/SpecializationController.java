@@ -20,32 +20,32 @@ public class SpecializationController {
     private SpecializationsService specializationsService;
 
     @GetMapping("/specializations/all")
-    public ResponseEntity<List> getAllSpecializationsWithoutPagination () {
+    public ResponseEntity<List> getAllSpecializationsWithoutPagination() {
         List<Specialization> specs = specializationsService.getAllSpecializations();
         return new ResponseEntity(specs, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/specializations")
-    public ResponseEntity<Map<String, Object>> getAlSpecializations (@RequestParam(defaultValue = "0") Integer pageNo,
-                                                                     @RequestParam(defaultValue = "10") Integer pageSize,
-                                                                     @RequestParam(defaultValue = "id") String sortBy) {
+    public ResponseEntity<Map<String, Object>> getAlSpecializations(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                                    @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                    @RequestParam(defaultValue = "id") String sortBy) {
 
         Map<String, Object> allSpecializations = specializationsService.getAllSpecializations(pageNo, pageSize, sortBy);
         return new ResponseEntity<Map<String, Object>>(allSpecializations, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/specializations/search")
-    public ResponseEntity<Map<String, Object>> getAlSpecializations (@RequestParam String name,
-                                                                     @RequestParam(defaultValue = "0") Integer pageNo,
-                                                                     @RequestParam(defaultValue = "10") Integer pageSize,
-                                                                     @RequestParam(defaultValue = "id") String sortBy) {
+    public ResponseEntity<Map<String, Object>> getAlSpecializations(@RequestParam String name,
+                                                                    @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                    @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                    @RequestParam(defaultValue = "id") String sortBy) {
 
         Map<String, Object> allSpecializations = specializationsService.getSpecializationByName(name, pageNo, pageSize, sortBy);
         return new ResponseEntity<Map<String, Object>>(allSpecializations, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/specializations/{id}")
-    public Specialization getSpecialization (@PathVariable Integer id) throws ResponseStatusException {
+    public Specialization getSpecialization(@PathVariable Integer id) throws ResponseStatusException {
         try {
             return specializationsService.getSpecialization(id);
         } catch (Exception e) {
@@ -53,13 +53,13 @@ public class SpecializationController {
         }
     }
 
-    @PostMapping(path="/specializations")
-    public Specialization addNewSpecialization (@RequestBody Specialization spec) {
+    @PostMapping(path = "/specializations")
+    public Specialization addNewSpecialization(@RequestBody Specialization spec) {
         return specializationsService.addSpecialization(spec);
     }
 
     @PutMapping("/specializations/{id}")
-    public Specialization updateSpecialization (@RequestBody Specialization newSpec, @PathVariable Integer id) {
+    public Specialization updateSpecialization(@RequestBody Specialization newSpec, @PathVariable Integer id) {
         return specializationsService.updateSpecialization(newSpec, id);
     }
 

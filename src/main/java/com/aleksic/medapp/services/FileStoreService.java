@@ -2,12 +2,9 @@ package com.aleksic.medapp.services;
 
 import com.aleksic.medapp.bucket.BucketName;
 import com.aleksic.medapp.filestore.FileStore;
-import com.aleksic.medapp.models.Report;
 import com.aleksic.medapp.models.User;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +43,7 @@ public class FileStoreService {
         String path = String.format("%s/%s/%s", BucketName.HEALTHCHECK_BUCKET.getBucketName(), user.getId(), healthcheckId);
         String fileName = String.format("%s-%s", UUID.randomUUID(), file.getOriginalFilename());
         // https://medapp-healthcheck-12042020.s3.eu-central-1.amazonaws.com/3/1/pregled1.png - example
-        String newReportFileName = String.format("https://%s.s3.eu-central-1.amazonaws.com/%s/%s/%s", BucketName.HEALTHCHECK_BUCKET.getBucketName(), user.getId(), healthcheckId,  fileName);
+        String newReportFileName = String.format("https://%s.s3.eu-central-1.amazonaws.com/%s/%s/%s", BucketName.HEALTHCHECK_BUCKET.getBucketName(), user.getId(), healthcheckId, fileName);
         Map<String, String> s3UploadResponseMap = new HashMap<>();
         s3UploadResponseMap.put("s3FileUrl", newReportFileName);
         try {

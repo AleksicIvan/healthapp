@@ -1,6 +1,7 @@
 package com.aleksic.medapp.models;
 
 import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "doctors")
 public class Doctor {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @NotBlank

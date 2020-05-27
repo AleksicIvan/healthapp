@@ -27,10 +27,10 @@ public class FileStoreController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> uploadHealthCheckReport(@PathVariable("userId")Integer userId,
-                                                  @PathVariable("healthcheckId")Integer healthCheckId,
-                                                  @RequestParam("file") MultipartFile file) {
-       Map<String, String> storedS3File = fileStoreService.uploadHealthCheckReport(userId, healthCheckId, file);
-       return new ResponseEntity(storedS3File, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<?> uploadHealthCheckReport(@PathVariable("userId") Integer userId,
+                                                     @PathVariable("healthcheckId") Integer healthCheckId,
+                                                     @RequestParam("file") MultipartFile file) {
+        Map<String, String> storedS3File = fileStoreService.uploadHealthCheckReport(userId, healthCheckId, file);
+        return new ResponseEntity(storedS3File, new HttpHeaders(), HttpStatus.OK);
     }
 }
